@@ -1,0 +1,855 @@
+# Base de conhecimento — Case de Relatórios do novo Portal Ticket
+
+## 1. Objetivo deste documento
+
+Este documento consolida o contexto, a sequência do projeto, os principais problemas identificados, decisões de design, evidências, solução desenvolvida, validações e resultados conhecidos do projeto de relatórios do novo Portal Ticket.
+
+Ele deve funcionar como fonte de contexto para construção posterior de:
+- narrativa do case;
+- roteiro de apresentação;
+- slides;
+- argumentos de design;
+- explicações sobre decisões;
+- relação com negócio, tecnologia, self-service e Growth;
+- possíveis reflexões sobre AI.
+
+O conteúdo abaixo deve ser tratado como base factual. Não inventar métricas, causalidades, justificativas ou resultados que não estejam documentados.
+
+---
+
+# 2. Contexto da empresa e do produto
+
+A Ticket possui um portal legado, chamado TEP, e um novo portal, o Portal Ticket / Customer Portal.
+
+Existe uma iniciativa de migração progressiva das funcionalidades e dos clientes do sistema legado para o novo portal.
+
+O novo portal nasceu atendendo principalmente clientes SMB, mas sua evolução precisa permitir que também absorva necessidades de clientes maiores.
+
+Esses clientes possuem perfis variados dentro das empresas, como:
+- RH;
+- Financeiro;
+- Administrativo;
+- outros perfis responsáveis pela gestão dos benefícios.
+
+Para que a migração do TEP avance, o novo portal precisa oferecer funcionalidades relevantes que ainda existem no sistema legado.
+
+Uma dessas áreas é a de relatórios.
+
+---
+
+# 3. O projeto de relatórios
+
+O projeto tem como objetivo reconstruir a experiência de relatórios no novo Portal Ticket, permitindo que necessidades hoje atendidas no TEP possam ser realizadas no novo portal.
+
+O projeto não nasceu originalmente como um projeto de Growth.
+
+O principal contexto é:
+- migração do sistema legado;
+- aumento da capacidade do novo portal;
+- atendimento das necessidades de clientes maiores;
+- evolução da experiência de self-service;
+- redução da dependência do legado ao longo do tempo.
+
+Growth pode ser utilizado como uma lente quando houver relação real com:
+- adoção do novo portal;
+- self-service;
+- eficiência;
+- comportamento;
+- migração;
+- redução potencial de dependência operacional.
+
+Não afirmar impacto de Growth sem evidência.
+
+---
+
+# 4. Minha entrada no projeto
+
+Existe um aspecto importante na história do projeto relacionado à minha atuação.
+
+O projeto não começou originalmente comigo.
+
+Em determinado momento, eu busquei esse projeto e passei a conduzir a frente inicial de Product Design.
+
+Nesse estágio ainda não havia uma equipe estruturada dedicada à iniciativa.
+
+Por isso, boa parte da fase inicial de design foi conduzida com bastante autonomia, incluindo tanto atividades de discovery quanto a estruturação inicial da solução.
+
+Minha atuação envolveu principalmente:
+- entender o problema existente;
+- analisar a experiência do sistema legado;
+- organizar as necessidades de relatórios;
+- participar/conduzir discovery com clientes;
+- estruturar a arquitetura inicial da nova solução;
+- desenvolver o design da experiência;
+- validar a proposta;
+- articular decisões com áreas e squads impactadas.
+
+É importante não transformar isso em uma narrativa de “eu fiz tudo sozinho”.
+
+O ponto relevante é mostrar autonomia e ownership em um contexto inicialmente pouco estruturado, principalmente na frente de Product Design.
+
+---
+
+# 5. Como funcionavam os relatórios no sistema legado
+
+No TEP, a experiência de relatórios era estruturada como uma coleção de páginas independentes.
+
+Cada relatório possuía aproximadamente a seguinte lógica:
+
+1. o usuário acessava uma página específica de relatório;
+2. encontrava filtros relacionados àquele relatório;
+3. aplicava os filtros;
+4. visualizava uma listagem;
+5. a estrutura dessa listagem era fixa;
+6. o usuário não conseguia manipular livremente a composição das informações exibidas;
+7. posteriormente podia realizar uma exportação.
+
+A experiência era, portanto, muito orientada a relatórios pré-definidos.
+
+Existiam diferentes relatórios e, em alguns casos, diferentes variações relacionadas ao mesmo domínio de informação.
+
+Exemplos:
+- diferentes relatórios relacionados a pedidos;
+- diferentes relatórios relacionados a beneficiários;
+- relatórios fiscais;
+- relatórios de cartões;
+- reversões;
+- outras necessidades específicas.
+
+Isso criou ao longo do tempo uma estrutura fragmentada.
+
+O usuário precisava escolher qual relatório atendia a necessidade que ele possuía.
+
+A estrutura de cada relatório estava previamente determinada pelo produto.
+
+---
+
+# 6. Uso dos relatórios no legado
+
+Dados do sistema legado foram utilizados como uma das fontes para compreender a relevância e o uso dos relatórios.
+
+Exemplos de volume anual observados no TEP:
+
+- Visualizar Nota Fiscal: aproximadamente 30,5 mil utilizações;
+- Detalhes de Pedido: aproximadamente 26,6 mil;
+- Beneficiários: aproximadamente 13,2 mil;
+- Resumo de Pedido: aproximadamente 6,9 mil;
+- Reemissão de Cartões: aproximadamente 6,3 mil.
+
+Os valores precisam ser revisados posteriormente antes da apresentação final.
+
+Esses dados não devem ser utilizados para provar causalidade.
+
+Eles ajudam principalmente a demonstrar que determinadas consultas e relatórios possuíam uso relevante no sistema legado e deveriam ser considerados na migração.
+
+---
+
+# 7. O papel da área de Operações
+
+Operações é uma área que oferece suporte técnico e operacional mais direto aos clientes Ticket.
+
+Ela atua principalmente em situações que:
+- não conseguem ser resolvidas diretamente pelas plataformas de gestão/self-service;
+- possuem maior complexidade;
+- demandam algum tipo de tratamento manual;
+- exigem apoio durante implantação;
+- envolvem demandas específicas não atendidas pelo portal.
+
+Portanto, Operações funciona como uma camada complementar ao produto digital.
+
+Não significa que qualquer contato com Operações seja um problema.
+
+Existem necessidades legítimas que podem exigir atendimento operacional.
+
+No entanto, quando o portal não oferece flexibilidade suficiente para resolver determinadas necessidades recorrentes, parte dessas demandas pode acabar dependendo de intervenção operacional.
+
+Esse contexto é relevante para o projeto porque aumentar a capacidade do portal de atender diferentes necessidades de consulta pode aumentar o self-service.
+
+Não afirmar redução efetiva de chamados ou de custos operacionais caso não exista dado que comprove isso.
+
+---
+
+# 8. Reformulação do problema
+
+Um dos principais pontos do projeto foi perceber que o desafio não deveria ser tratado apenas como:
+
+“Quais relatórios do TEP precisam ser reconstruídos no novo portal?”
+
+Copiar cada relatório existente significaria reproduzir a mesma lógica fragmentada do sistema legado.
+
+A questão passou a ser:
+
+“Como migrar a capacidade de relatórios sem simplesmente reproduzir a arquitetura fragmentada do legado?”
+
+A investigação começou a buscar:
+- quais informações os usuários realmente precisavam;
+- quais relatórios tratavam de necessidades semelhantes;
+- quais elementos poderiam ser agrupados;
+- quais filtros eram realmente necessários;
+- quais estruturas poderiam ser reutilizadas entre diferentes contextos.
+
+Esse momento representa uma mudança importante de framing.
+
+O projeto deixa de ser apenas uma migração de telas e passa a ser uma reorganização da arquitetura da experiência de relatórios.
+
+---
+
+# 9. Discovery
+
+O discovery utilizou diferentes fontes de informação.
+
+## 9.1. Análise do legado
+
+Os relatórios existentes no TEP foram analisados para compreender:
+- quais relatórios existiam;
+- quais informações eram apresentadas;
+- quais filtros eram utilizados;
+- quais relatórios possuíam objetivos semelhantes;
+- quais diferenças existiam entre variações de um mesmo tipo de relatório.
+
+Essa análise ajudou a mapear a estrutura existente.
+
+---
+
+## 9.2. Dados de utilização
+
+Os dados de utilização do TEP ajudaram a compreender:
+- quais relatórios possuíam maior utilização;
+- quais áreas de informação tinham maior relevância;
+- quais funcionalidades deveriam receber maior atenção durante a migração.
+
+Esses dados foram utilizados como sinal de comportamento, não como única fonte de decisão.
+
+---
+
+## 9.3. Pesquisa com clientes
+
+Foram realizadas cinco entrevistas com clientes.
+
+O período registrado foi aproximadamente entre 06/07 e 29/07.
+
+Essas entrevistas foram utilizadas para:
+- compreender como os clientes utilizavam relatórios;
+- entender necessidades relacionadas a consulta de dados;
+- identificar necessidades de filtros;
+- avaliar a organização proposta;
+- entender expectativas sobre exportação;
+- identificar lacunas da nova experiência.
+
+---
+
+## 9.4. Benchmark
+
+Também houve análise de referências externas.
+
+Entre os benchmarks utilizados estava a Totvs.
+
+O benchmark não deve ser apresentado como origem única das decisões.
+
+Ele funcionou como uma referência complementar para entender possibilidades de organização e interação.
+
+---
+
+# 10. Insight estrutural
+
+Um dos principais insights foi que diversos relatórios independentes poderiam ser tratados como diferentes visões de poucos grandes domínios de informação.
+
+Em vez de manter uma arquitetura baseada em dezenas de páginas de relatório, a solução poderia agrupar necessidades relacionadas.
+
+Os principais grupos passaram a incluir:
+
+- Pedidos / Documentos Fiscais;
+- Beneficiários / Extrato;
+- Cartões;
+- Reversões;
+- Informe de Rendimentos;
+- outras necessidades específicas existentes no escopo.
+
+A arquitetura de rotas prevista no novo portal inclui, por exemplo:
+
+- `/relatorios/pedidos`
+- `/relatorios/cartoes`
+- `/relatorios/beneficiarios`
+- `/relatorios/reversoes`
+
+Também existe redirecionamento a partir da rota antiga de relatórios.
+
+A decisão estrutural foi, portanto:
+
+**agrupar necessidades semelhantes por domínio em vez de reproduzir individualmente todos os relatórios existentes.**
+
+---
+
+# 11. Mudança de modelo de interação
+
+No sistema legado, o modelo dominante era:
+
+Relatório específico  
+→ filtros específicos  
+→ tabela fixa  
+→ exportação
+
+Na nova proposta, o modelo passa a ser mais próximo de:
+
+Domínio de informação  
+→ busca e filtros  
+→ visualização configurável  
+→ detalhamento  
+→ exportação
+
+A mudança mais importante é que o usuário deixa de depender exclusivamente de uma estrutura de relatório previamente determinada.
+
+Ele passa a poder ajustar melhor a visualização das informações disponíveis.
+
+Isso não significa que o sistema se torne completamente livre ou que qualquer combinação seja possível.
+
+A flexibilidade continua existindo dentro das regras e dados oferecidos pelo produto.
+
+---
+
+# 12. Estrutura da nova experiência
+
+A nova experiência utiliza uma lógica comum entre diferentes relatórios.
+
+Entre os principais elementos estão:
+
+## Busca
+
+Busca por informações específicas, dependendo do contexto.
+
+Exemplos:
+- CPF;
+- nome;
+- número do pedido.
+
+---
+
+## Filtros
+
+Os relatórios possuem filtros relacionados ao domínio.
+
+Exemplos:
+- empresa;
+- período;
+- filtros avançados;
+- outros filtros específicos.
+
+Também existem comportamentos relacionados a:
+- salvar filtros;
+- restaurar filtros.
+
+---
+
+## Tabelas e visualização
+
+As informações são apresentadas em tabelas.
+
+A proposta permite maior flexibilidade na composição da visualização quando comparada ao legado.
+
+O usuário pode ajustar quais informações deseja visualizar dentro das possibilidades disponibilizadas pela solução.
+
+Esse ponto é importante porque reduz a necessidade de criar uma página diferente para cada variação de relatório.
+
+---
+
+## Detalhamento
+
+Algumas informações possuem níveis adicionais de detalhe.
+
+A experiência busca permitir que o usuário acesse esses dados mantendo uma lógica consistente dentro da área de relatórios.
+
+---
+
+## Exportação
+
+Os relatórios permitem exportação.
+
+Formatos previstos/utilizados incluem:
+- XLSX;
+- CSV;
+- PDF;
+- downloads específicos dependendo do relatório.
+
+A disponibilidade de formatos pode variar conforme o domínio.
+
+---
+
+# 13. Princípio de consistência
+
+Um dos princípios importantes da solução é:
+
+**os dados mudam de acordo com o domínio, mas o modelo de interação permanece consistente.**
+
+Isso significa que Pedidos, Beneficiários, Cartões e Reversões podem possuir:
+- dados diferentes;
+- filtros diferentes;
+- campos diferentes;
+- regras específicas.
+
+Mas compartilham uma estrutura de interação semelhante.
+
+Esse modelo melhora a consistência da experiência e cria uma arquitetura reutilizável.
+
+---
+
+# 14. Escalabilidade
+
+A nova arquitetura busca tornar o crescimento da área de relatórios menos dependente da criação de uma nova página para cada necessidade.
+
+Em vez de pensar:
+
+“precisamos criar mais um relatório”
+
+a arquitetura permite pensar:
+
+“essa necessidade pertence a qual domínio e como pode ser representada dentro desse modelo?”
+
+Os domínios podem evoluir adicionando ou ajustando:
+- filtros;
+- informações;
+- colunas;
+- detalhes;
+- formas de exportação.
+
+Esse é um dos principais ganhos estruturais da solução.
+
+É importante tratar isso como ganho arquitetural/design.
+
+Não afirmar automaticamente redução de esforço de desenvolvimento caso isso não tenha sido mensurado.
+
+---
+
+# 15. Exemplo: Pedidos e Documentos Fiscais
+
+Pedidos é uma das principais áreas da nova arquitetura.
+
+A visão reúne necessidades relacionadas a pedidos e documentos fiscais.
+
+Entre as possibilidades existentes estão:
+- busca;
+- filtro por empresa;
+- filtro por período;
+- filtros avançados;
+- listagem de pedidos;
+- acesso a detalhes;
+- visualização de documentos fiscais;
+- exportação;
+- download de informações.
+
+No legado, parte dessas necessidades aparecia distribuída entre diferentes relatórios ou páginas.
+
+Na nova proposta, elas passam a fazer parte de um domínio comum.
+
+---
+
+# 16. Exemplo: Beneficiários
+
+Beneficiários também passa a funcionar como um domínio de informação.
+
+A experiência contempla consulta e exploração dos dados relacionados aos beneficiários.
+
+A validação identificou também necessidades que ainda precisavam evoluir, incluindo questões como:
+- dados relacionados a departamento;
+- filtro por departamento.
+
+Essas lacunas devem ser apresentadas como aprendizados ou pontos de evolução, e não como falha completa da solução.
+
+---
+
+# 17. Validação da solução
+
+A nova experiência foi validada com clientes.
+
+Foram realizadas cinco entrevistas/testes.
+
+A validação aconteceu durante uma disponibilização progressiva da solução.
+
+Existem registros de ondas como:
+- 100 clientes;
+- 200 clientes;
+- 300 clientes.
+
+Os números exatos devem ser revisados posteriormente.
+
+A lógica relevante é que a solução não foi liberada imediatamente para toda a base.
+
+A disponibilização aconteceu de forma progressiva enquanto o time coletava aprendizados.
+
+---
+
+# 18. Objetivos da validação
+
+A validação buscou entender principalmente:
+
+- se a nova organização dos relatórios era compreensível;
+- se os usuários conseguiam localizar as informações necessárias;
+- se conseguiam utilizar filtros e buscas;
+- se entendiam a possibilidade de alterar a visualização;
+- se a experiência atendia necessidades reais;
+- quais lacunas ainda existiam;
+- se havia bloqueios relevantes antes de ampliar a disponibilização.
+
+---
+
+# 19. Sinais positivos da validação
+
+Entre os sinais positivos observados:
+
+- a experiência foi percebida como simples;
+- a experiência foi percebida como mais dinâmica;
+- usuários conseguiram navegar pela estrutura;
+- usuários conseguiram alterar/ajustar a visualização das informações;
+- não foram identificados bloqueios críticos de navegação na validação.
+
+Evitar transformar esses pontos em indicadores quantitativos caso não existam métricas específicas.
+
+---
+
+# 20. Lacunas identificadas na validação
+
+A validação também revelou necessidades que ainda não estavam completamente atendidas.
+
+Entre elas:
+
+- informações e filtro de departamento em Beneficiários;
+- necessidade de PDF em determinados downloads;
+- necessidade de exportação em lote em algumas visualizações de detalhes.
+
+Esses pontos são importantes na narrativa porque mostram que a pesquisa não foi utilizada apenas para “validar” uma solução pronta.
+
+Ela também identificou lacunas concretas e orientou evolução posterior.
+
+---
+
+# 21. Resultado estrutural do projeto
+
+O principal resultado do projeto não deve ser descrito simplesmente como:
+
+“criamos novas telas de relatórios.”
+
+A transformação mais importante foi:
+
+**substituir uma lógica baseada em múltiplos relatórios independentes por uma arquitetura comum de consulta, configuração e exportação de informações.**
+
+A mudança pode ser resumida assim:
+
+### Antes
+
+- relatórios separados;
+- páginas independentes;
+- filtros específicos por relatório;
+- tabelas rígidas;
+- visualização previamente definida;
+- diferentes variações para necessidades semelhantes.
+
+### Depois
+
+- organização por domínios;
+- estrutura de interação comum;
+- busca e filtros;
+- maior flexibilidade de visualização;
+- detalhamento;
+- exportação;
+- possibilidade de evolução dentro de uma arquitetura compartilhada.
+
+---
+
+# 22. Resultado para a estratégia de migração
+
+O projeto também deve ser entendido dentro da estratégia de migração do legado.
+
+Ao reconstruir uma capacidade relevante do TEP no novo portal, o projeto contribui para que mais necessidades possam ser realizadas dentro do Portal Ticket.
+
+Isso ajuda a criar as condições necessárias para:
+- migração de clientes;
+- redução futura da dependência do legado;
+- aumento da cobertura funcional do novo portal.
+
+Não afirmar que o TEP foi desligado como resultado direto deste projeto, a menos que isso seja confirmado.
+
+---
+
+# 23. Relação com self-service
+
+Existe uma relação clara entre a arquitetura de relatórios e self-service.
+
+Quando o portal oferece uma estrutura mais flexível para:
+- consultar;
+- filtrar;
+- reorganizar;
+- detalhar;
+- exportar dados;
+
+ele aumenta a capacidade do usuário de resolver necessidades diretamente na plataforma.
+
+Essa é uma relação legítima com Growth, principalmente em um produto B2B.
+
+No entanto, é importante diferenciar:
+
+### Evidência existente
+
+A solução aumenta as possibilidades de resolução dentro do portal.
+
+### Hipóteses ou impactos potenciais
+
+Isso pode:
+- reduzir dependência de suporte;
+- reduzir demandas operacionais;
+- facilitar adoção do novo portal;
+- contribuir para retenção ou engajamento.
+
+Esses impactos não devem ser apresentados como resultados comprovados sem métricas.
+
+---
+
+# 24. Growth no case
+
+O case não deve ser artificialmente apresentado como um projeto de Growth.
+
+Growth pode aparecer como uma lente de análise.
+
+Os pontos de conexão mais legítimos são:
+
+- migração de usuários do legado para o novo portal;
+- adoção de funcionalidades do novo portal;
+- aumento da capacidade de self-service;
+- redução de fricção para encontrar informações;
+- possibilidade de diminuir dependência de atendimento humano;
+- comportamento de uso dos relatórios;
+- mensuração da utilização das novas funcionalidades.
+
+Caso existam dados posteriores de:
+- adoção;
+- frequência de uso;
+- exportações;
+- redução de chamados;
+- migração;
+- retenção;
+
+eles podem fortalecer essa leitura.
+
+No estado atual, não inventar esses resultados.
+
+---
+
+# 25. AI no projeto
+
+AI não deve ser apresentada como parte da solução se ela não participou da construção do produto.
+
+Caso ferramentas de AI tenham sido utilizadas no processo de design, isso pode ser descrito separadamente como uso de AI no workflow do designer.
+
+Não atribuir à solução uma camada de inteligência artificial inexistente.
+
+Como reflexão futura, é possível considerar que uma arquitetura mais estruturada de dados e intenções pode criar espaço para formas de consulta assistida.
+
+Exemplos conceituais:
+- consultas em linguagem natural;
+- auxílio para encontrar informações;
+- apoio na construção de filtros;
+- sumarização de informações.
+
+Esses pontos devem ser claramente apresentados como possibilidades futuras, não como parte do projeto realizado.
+
+---
+
+# 26. Minha contribuição como Product Designer
+
+A narrativa do case deve evidenciar principalmente:
+
+## Estruturação de problema
+
+O trabalho não começou apenas pela interface.
+
+Houve uma investigação sobre:
+- estrutura existente;
+- comportamento de uso;
+- necessidades dos clientes;
+- limitações do legado;
+- relação com Operações.
+
+---
+
+## Information Architecture
+
+Uma decisão central foi reorganizar múltiplos relatórios em domínios de informação.
+
+Esse é um dos elementos mais fortes do projeto.
+
+---
+
+## Interaction Design
+
+Foi criado um modelo comum de interação baseado em:
+- busca;
+- filtros;
+- visualização;
+- detalhamento;
+- exportação.
+
+---
+
+## Pesquisa
+
+A solução foi discutida e validada com clientes.
+
+A pesquisa foi utilizada tanto para validar compreensibilidade quanto para identificar lacunas.
+
+---
+
+## Systems Thinking
+
+O trabalho buscou evitar a criação de soluções isoladas para cada relatório.
+
+A proposta considera consistência, reutilização e evolução futura da arquitetura.
+
+---
+
+## Articulação
+
+O projeto envolve diferentes áreas e squads.
+
+A solução precisou considerar:
+- necessidades dos clientes;
+- sistema legado;
+- novo portal;
+- operações;
+- restrições e dependências técnicas;
+- squads impactadas.
+
+---
+
+# 27. Ownership e autonomia
+
+Uma característica relevante do projeto foi o nível de autonomia exercido no início.
+
+Eu não recebi simplesmente um fluxo definido para desenhar.
+
+A iniciativa ainda precisava ser estruturada do ponto de vista de design.
+
+Minha atuação incluiu ajudar a transformar uma demanda ampla de migração de relatórios em:
+- um problema de produto mais claro;
+- uma arquitetura de informação;
+- uma proposta de experiência;
+- uma solução que pudesse ser validada.
+
+Esse ponto deve ajudar a demonstrar senioridade.
+
+Evitar a narrativa heroica de que todas as decisões foram tomadas individualmente.
+
+O valor está no ownership exercido em um contexto com pouca estrutura inicial.
+
+---
+
+# 28. Sequência resumida dos acontecimentos
+
+A sequência geral pode ser entendida desta forma:
+
+1. Existia uma iniciativa maior de migração do TEP para o novo Portal Ticket.
+
+2. Relatórios era uma das capacidades importantes que precisavam ser migradas.
+
+3. O projeto ainda não possuía uma estrutura de design consolidada.
+
+4. Eu busquei a iniciativa e passei a conduzir a frente inicial de Product Design com autonomia.
+
+5. O primeiro passo foi compreender a experiência existente no legado.
+
+6. Foi realizado um inventário/análise dos relatórios, filtros e estruturas existentes.
+
+7. Dados de utilização ajudaram a entender quais consultas possuíam maior uso.
+
+8. Foi percebido que existiam diversos relatórios relacionados a necessidades semelhantes.
+
+9. A hipótese deixou de ser copiar cada relatório e passou a ser reorganizar essas necessidades.
+
+10. Os relatórios foram agrupados em grandes domínios de informação.
+
+11. Foi construída uma arquitetura comum para busca, filtros, visualização, detalhamento e exportação.
+
+12. A solução foi desenhada para Pedidos, Beneficiários, Cartões, Reversões e demais necessidades previstas.
+
+13. Foram realizadas pesquisas/entrevistas com cinco clientes.
+
+14. A experiência foi disponibilizada progressivamente para grupos de clientes.
+
+15. A validação indicou boa compreensão geral e também revelou lacunas específicas.
+
+16. Essas lacunas alimentaram a evolução da solução.
+
+17. O resultado foi uma nova arquitetura para relatórios no Portal Ticket, e não apenas a reprodução das páginas existentes no TEP.
+
+---
+
+# 29. Mensagem central do case
+
+A principal mensagem do case pode ser sintetizada como:
+
+A Ticket precisava migrar uma capacidade relevante do sistema legado para o novo portal.
+
+Ao investigar o problema, percebemos que simplesmente reconstruir os relatórios existentes reproduziria uma arquitetura fragmentada, baseada em páginas independentes e estruturas rígidas.
+
+A partir da análise do legado, dos dados de utilização e da pesquisa com clientes, reorganizamos essas necessidades em grandes domínios de informação e criamos uma arquitetura comum baseada em busca, filtros, visualização configurável, detalhamento e exportação.
+
+A solução foi disponibilizada e validada progressivamente com clientes, permitindo identificar tanto sinais positivos quanto lacunas para evolução.
+
+O principal resultado não foi apenas um novo conjunto de telas, mas uma nova lógica para estruturar e evoluir relatórios dentro do Portal Ticket.
+
+---
+
+# 30. O que este case deve demonstrar em uma entrevista técnica
+
+O case deve mostrar capacidade de:
+
+- entrar em um problema ainda pouco estruturado;
+- compreender sistemas legados complexos;
+- transformar uma demanda de migração em um problema de produto;
+- utilizar dados e pesquisa de maneira complementar;
+- construir arquitetura de informação;
+- tomar decisões de produto e design;
+- trabalhar com escalabilidade;
+- pensar em self-service;
+- articular experiência, negócio, operação e tecnologia;
+- validar hipóteses com clientes;
+- reconhecer limitações e lacunas da solução;
+- diferenciar resultado real de impacto potencial;
+- exercer ownership sem apagar o trabalho coletivo.
+
+---
+
+# 31. Guardrails para qualquer conteúdo gerado a partir desta base
+
+Ao utilizar este documento para produzir apresentação, roteiro ou outros materiais:
+
+Não inventar:
+- métricas;
+- resultados;
+- redução de chamados;
+- redução de custos;
+- aumento de adoção;
+- aumento de retenção;
+- causalidade entre a solução e indicadores de negócio;
+- uso de AI que não aconteceu;
+- decisões técnicas não documentadas.
+
+Diferenciar sempre:
+- problema;
+- evidência;
+- insight;
+- hipótese;
+- decisão;
+- solução;
+- resultado;
+- impacto potencial.
+
+Priorizar:
+- raciocínio;
+- decisões;
+- trade-offs;
+- arquitetura;
+- pesquisa;
+- evidências;
+- impacto estrutural.
+
+Evitar transformar o case em uma apresentação apenas sobre telas.
+
+O elemento central é a transformação do modelo de relatórios e o raciocínio que levou a essa mudança.

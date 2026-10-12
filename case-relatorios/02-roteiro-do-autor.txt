@@ -1,0 +1,190 @@
+Apresentaçao relatorios
+
+
+
+Intro
+
+Contexto
+- Portal de gestão de benefícios Ticket (B2B)
+- 2026
+
+
+
+Problema:
+- Migração top accounts - legado
+- Requisitos - migrar a experiencia de relatórios 
+- 6 meses
+
+
+
+Objetivo inicial
+- Migração As-Is
+- Não existia uma equipe
+- Projeto sem squad - Assume é o GPM
+
+
+
+
+Onde eu entro
+- Não tinha designer
+- Eu queria tocar um projeto diferente
+- identificaçao com relatórios
+- peço pra assumir 
+
+
+
+
+INICIATIVA, AUTONOMIA
+
+—--
+
+Discovery
+
+
+
+- Entendimento da solução (o que são os relatórios em cada portal)
+  - Legado
+  - Novo portal
+  - ambos experiencias fixas, individuais, foco no arquivo exportado
+  - Experiencia nao é padronizada
+  - 18 relatórios (cada uma uma tela, com seus filtros)
+
+- Análise de comportamento (legado)
+  - tipo de dados
+    - relatórios mais acessados, filtros mais utilizados, frequencia de uso, 
+  - Resultados
+    - Geral - entendimento do ranking de uso
+    - atençao qdo a visão é segmentada 
+      - o acesso de clientes maiores despenca (25% mas a maiores contas)
+      - Porque os clientes maiores usam menos?
+
+- Como o mercado trata (AI Discovery + pesquisa manual (visual))
+  - Visão geral (bench)
+  - Visão do segmento (bench)
+    - Tipos de relatorios
+    - Como se dá a experiencia
+    - Funcionalidades
+    - terminologias
+    - arquitetura / UI
+    - tipos de campos, componentes, tratamento de dados.
+  - Resultados
+    - experiencia exploraçao em tela
+    - personalização
+    - tendencia de padronizaçao de UX / UI (busca por similaridade)
+
+
+
+AQUI  É MOSTRAR USO DE AI PARA DISCOVERY
+
+
+
+- OUVIR O CLIENTE
+  - Dificuldade para entrevistar clientes x tempo necessario para o discovery
+  - Falar com GNs e Operações
+    - Resultados
+    - Uma grande parte de clientes, principalmente maiores, tem demandas bem específicas (tipos de campos, colunas, ordenaçao)
+    - Operações gera manualmente relatorios (periodicamente)
+    - Informação não visível nos dados
+    - Ação
+      - coleto os arquivos com os modelos dos relatorios gerandos para esses clientes e uso AI pra tentar gerar um diagnóstico e identificar padrões (USO DE AI DE NOVO)
+        - Resultado:
+        - Apontou 4 grandes grupos de relatórios
+        - Demandas muito específicas de filtros, informaçoes, layout.
+* Chamados
+	observando os chamados de suporte, o  segundo com mais chamados era relatórios (no legado) o que interpretei como um sinal de qeu o atual já nao estava atendendo. 
+
+
+
+- ANALISE E DIAGNÓSTICO
+  - A arquitetura As-Is pode garantir a migração do legado mas continua não atendendo grandes contas
+  - Experiencia perde quando comparada a práticas do mercado. 
+  - Risco de focar recursos para  desenvolver uma solução que va exibir customizaçoes e atualizaçoes logo.
+  - Risco de frustração de clientes que ja vinham pedindo por uma solução mais eficiente há muito tempo.
+  - 
+
+  - PROPOSTA DE SOLUÇÃO
+    - Construir uma nova arquitetura voltada para autoserviço, escala e personalização e exportação em lote.
+    - 4 grupos principais de relatórios
+      - Pedidos e documentos fiscais (foco operacional e prestaçao de contas para outras areas)
+      - Extrato de Beneficiarios (prestaçao de contas, documentos para auditorias e demandas legais)
+      - Cartões (foco no acompanhamento de entrega e historico de cartoes)
+      - Reversões de crédito (analise gerencial)
+
+- Mudança no projeto inicial necessidade de buy in e aprovação de stakholder
+  - primeiro com o GPM que liderava o projeto comigo
+  - Validação com engenharia
+  - Outras Squads (pela característica cross)
+  - Direção
+
+- para aprovar 
+  - Além do resultado do discovery
+  - Prototipo feito com AI, com dados mocados para permitir entender a proposta, visualizar, facilitar discussoes 
+  - Uso do protótipo pra validar com 5 clientes
+
+- Resultado da validação:
+  - projeto foi aprovado com deadline de 6 meses
+  - Desenvolvimento terceirizado Stephanini 
+
+
+
+
+
+
+DESENHO DE SOLUÇÃO
+
+
+- Quebra de backlog
+  - Arquitetura (sem personalização, ações e dashboard) + relatorio de pedidos 
+  - relatório de beneficiarios
+  - relatório de cartões
+  - relatório de reversões
+  - personalização
+  - dashboard
+  - ações em lote
+- Fluxo (cada relatórios) 2 semanas cada de design e validaçao depois handoff
+  - Refinar cada relatorios (campos, filtros, especificidades)
+  - Validar com Operações e GN
+  - Validar com Engenharia
+  - Validar com Dados
+
+- Rollout e primeiras revisões, acompanhamento de perto
+  - 1 cliente
+  - 10 clientes
+  - 
+
+- Com o sinal  positivo dos primeiros rollouts, a ideia era ampliar para 100 clientes
+  - nao teria mais como acompanhar de perto e nao teria suporte para ensinar. 
+  - Como a nova proposta mudava a experiencia atual, adicionamos na interface
+    - Link canal de duvidas e sugestões
+    - Landing Page com tutorial, vídeo e FAQ orientado aos primeiros passos no relatio
+      - Como nao tinha recursos para desenvolver essa página foi desenvolvida usando o Figma Make e publicada nele sem necessidade de desenvolvimento
+
+
+
+
+Resultados
+
+
+- Problema: o plano de instrumentalização acabou se perdendo no processo e no momento do rollout não teriamos os eventos tagueados. 
+- Solução: consegui, usando a AI do Datadog, investigar a estrutura e montar dois dash para acompanhamento e validaçao da soluçao
+  - Analise de comportamentos
+    - Acessos
+    - Retorno
+    - Ações e engajamento
+
+- Analise de performance técnica
+  - webvitals
+  - APIs
+- Além de acompanhar de perto os chamados 
+
+- Acompanhamos por 15 dias
+  - Identificação de pequenos erros e demanda de ajustes
+  - Conseguimos os relatorios  de maior engajamento
+  - Entendemos que podiamos escalar  pra 1000
+  - 
+
+  - Onde estamos
+    - Ja foram  migrados 6500 clientes, desses somente 13 solicitar retornar a plataforma antiga por falta de funciolidades dos relatorios.
+    - Mas os pontos ja haviam sido mapeados e estao na entrega da V2.
+
+- Usei AI para apresentar o projeto internamente
